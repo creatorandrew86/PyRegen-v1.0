@@ -20,6 +20,8 @@
 ## Data Plot
 ![Data Plot Screenshot](https://github.com/creatorandrew86/PyRegen-v1.0/blob/main/Images/Case%20Run/Data%20Plot.png?raw=true)
 
+## Full PyRegen Output
+
 ## Notes
 You can format the data plot with more options!!
 The drop in pressure at the coolant entry is due to the fluid accelerating into the channels, and is only considered at the coolant entry station. If you are employing more stations, the drop-off line would become more vertical, thus less affecting the accuracy of the plot.
