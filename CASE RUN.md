@@ -21,6 +21,7 @@
 ![Data Plot Screenshot](https://github.com/creatorandrew86/PyRegen-v1.0/blob/main/Images/Case%20Run/Data%20Plot.png?raw=true)
 
 ## Full PyRegen Output
+![Full Output File](Full Output.txt)
 
 ## Notes
 You can format the data plot with more options!!
