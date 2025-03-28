@@ -8,7 +8,7 @@ Put all the files "PyRegen Software" in the same folder (or download it directly
 This sections details how you should fill the channel geometry entries, especially the location related ones.
 
 # Stepped Channel
-https://github.com/creatorandrew86/PyRegen-v1.0/blob/main/Images/Stepped%20Channel%20Image.png?raw=true
+![Stepped Channel Image](https://github.com/creatorandrew86/PyRegen-v1.0/blob/main/Images/Stepped%20Channel%20Image.png?raw=true)
 
 
 
