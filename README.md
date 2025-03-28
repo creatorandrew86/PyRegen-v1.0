@@ -8,7 +8,7 @@ Put all the files "PyRegen Software" in the same folder (or download it directly
 This sections details how you should fill the channel geometry entries, especially the location related ones.
 
 # Stepped Channel
-![Stepped Channel Image](https://github.com/creatorandrew86/PyRegen-v1.0/blob/main/Images/Stepped%20Channel%20Image.png?raw=true)
+![Stepped Channel Image](https://github.com/creatorandrew86/PyRegen-v1.0/blob/main/Images/Stepped%20Channel%20Image%20(2).png?raw=true)
 ![Stepped Channel Entries](https://github.com/creatorandrew86/PyRegen-v1.0/blob/main/Images/Stepped%20Channel%20Entries.png?raw=true)
 
 The third entry -- Step End (Distance from IP) -- refers to the red distance on the first image.
