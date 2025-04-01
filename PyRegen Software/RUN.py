@@ -71,7 +71,6 @@ from ModuleDataStore import step_data, segment_data
 
 #Global variables, booleans...
 global scriptDir, nozzleType, injPsi_var, x_points, y_points, tab3
-injPsi_var = 0
 points_filepath, wall_k_entry = None, None
 scriptDir = os.path.dirname(os.path.abspath(__file__))
 
