@@ -443,7 +443,6 @@ checkbox_parabola_var = tk.IntVar()
 upload_var = tk.IntVar()
 RtValues_var = tk.IntVar()
 mfrValues_var = tk.IntVar()
-injPsi_v = tk.IntVar()
 
 #Nozzle options: 1-Conical 2-Bell 3-Upload points
 checkbox_conical = ttk.Checkbutton(tab1, text='Conical Nozzle', variable=checkbox_conical_var, command = ConicalValues)
