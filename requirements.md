@@ -33,5 +33,6 @@ pip install rocketcea-1.2.0.tar.gz
 ```
 
 You can find more information regarding RocketCEA installation, along with a potential gfortran requirement (for older systems), and Linux version here:
-[Link Text]([https://your-link.com](https://rocketcea.readthedocs.io/en/latest/quickstart.html))
+
+[Link Text](https://rocketcea.readthedocs.io/en/latest/quickstart.html)
 
