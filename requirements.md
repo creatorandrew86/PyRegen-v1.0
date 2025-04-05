@@ -21,7 +21,7 @@ pip install --upgrade CoolProp
 
 For Linux:
 ```python
-sudo pip install numpy matplotlib tkinter scipy
+sudo pip install numpy matplotlib tkinter scipy CoolProp
 ```
 
 ## RocketCEA
