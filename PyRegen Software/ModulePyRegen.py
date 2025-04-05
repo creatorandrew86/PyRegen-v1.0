@@ -63,7 +63,7 @@
 # -- Imports --
 import math, numpy as np, operator, CoolProp.CoolProp as CP
 from rocketcea.cea_obj import CEA_Obj
-from scipy.interpolate import interp1d, CubicSpline
+from scipy.interpolate import CubicSpline
 from scipy.optimize import fsolve
 
 #Import Auxiliary Modules
@@ -197,13 +197,10 @@ def PyRegen_func(PyRegen_args, c: CEA_Obj):
             # Generate the cw and ch values || Smoothen the channel
             # Note: Comment or Uncomment the 2 lines "cw_spline =..." and "ch_spline =..." in order of your preference of the channel geometry
 
-            #Part 1 -- Cubic Spline
+            #Cubic Spline
             cw_spline = CubicSpline(xInterval, cwInterval, bc_type='clamped')
             ch_spline = CubicSpline(xInterval, chInterval, bc_type='clamped')
 
-            #Part 2 -- Linear Interpolation
-            #cw_spline = interp1d(xInterval, cwInterval, kind='linear', fill_value="extrapolate")
-            #ch_spline = interp1d(xInterval, chInterval, kind='linear', fill_value="extrapolate")
 
             # Get the cw and ch values for the current location 'x'
             cw = cw_spline(x)
