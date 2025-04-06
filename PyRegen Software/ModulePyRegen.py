@@ -195,7 +195,6 @@ def PyRegen_func(PyRegen_args, c: CEA_Obj):
                 chInterval = chInterval[::-1]                                           # Reverse corresponding channel height
 
             # Generate the cw and ch values || Smoothen the channel
-            # Note: Comment or Uncomment the 2 lines "cw_spline =..." and "ch_spline =..." in order of your preference of the channel geometry
 
             #Cubic Spline
             cw_spline = CubicSpline(xInterval, cwInterval, bc_type='clamped')
