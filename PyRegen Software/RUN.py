@@ -419,12 +419,12 @@ def execute_PyRegen():
 
 #Lists for the Oxidizer, Fuel and Coolant
 
-coolant_list = ['Water', 'Methane', 'Ammonia', 'Ethane', 'Ethanol', 'R134a', 'Hydrogen', 'Methanol', 'n-Butane', 'Ethanol', 'Ethylene', 
+coolant_list = ['Water', 'Methane', 'Ammonia', 'Ethane', 'Ethanol', 'R134a', 'Methanol', 'n-Butane', 'Ethanol', 'Ethylene', 
                 'Fluorine', 'n-Decane', 'n-Hexane', 'n-Nonane', 'n-Octane', 'n-Pentane', 'n-Propane', 'n-Undecane']
 
 ox_list = ['LOX', 'Peroxide90', 'Peroxide 98', 'O2', 'AIR', 'F2', 'H2O2', 'HNO3', 'IRFNA', 'MON25','MON3', 'N2O', 'N2O4']
 
-fuel_list = ['CH4', 'RP1', 'H2', 'C2H6', 'C4H10', 'C3H8', 'Aerozine 50', 'B2H6', 'C2H2', 'Gasoline', 
+fuel_list = ['CH4', 'RP1', 'C2H6', 'C4H10', 'C3H8', 'Aerozine 50', 'B2H6', 'C2H2', 'Gasoline', 
              'Kerosene90_H2O10', 'LH2', 'MMH', 'UDMH', 'NITROMETHANE', 'Methanol', 'N2H4', 'NH3']
 
 
