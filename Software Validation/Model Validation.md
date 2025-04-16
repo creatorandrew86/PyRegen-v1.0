@@ -12,5 +12,5 @@ for LOX/CH4 Thrust Chambers"
  "Full Model Validation" - Experimental results by [Jan Haemisch, Dmitry Suslov, Michael Oschwald, 2021], available [here](https://www.jstage.jst.go.jp/article/tastj/19/1/19_19.96/_article)
 
 # Important
- Note that the engine sizes and mass flux have to be calculated by the user according to the chamber pressures given!
- Errors in coolant mass flow or engine size can produce erratic/wrong results, and are a source of significant errors in the calculation!
+ <mark>Note that the engine sizes and mass flux have to be calculated by the user according to the chamber pressures given!
+ Errors in coolant mass flow or engine size can produce erratic/wrong results, and are a source of significant errors in the calculation!<\mark>
