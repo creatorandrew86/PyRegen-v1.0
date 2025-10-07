@@ -13,4 +13,4 @@ for LOX/CH4 Thrust Chambers"
 
 # Important
  <mark>Note that the engine sizes and mass flux have to be calculated by the user according to the chamber pressures given!
- Errors in coolant mass flow or engine size can produce erratic/wrong results, and are a source of significant errors in the calculation!<\mark>
+ Errors in coolant mass flow or engine size can produce erratic/wrong results, and are a source of significant errors in the calculation!
