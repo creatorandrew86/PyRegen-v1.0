@@ -52,7 +52,7 @@ import tkinter as tk
 import os
 import CoolProp.CoolProp as CP
 import numpy as np
-from tkinter import ttk, filedialog, messagebox
+from tkinter import ttk, messagebox
 
 #Global values declaration
 global step_data, segment_data
@@ -71,7 +71,7 @@ from ModuleDataStore import step_data, segment_data
 
 #Global variables, booleans...
 global scriptDir, nozzleType, injPsi_var, x_points, y_points, tab3
-points_filepath, wall_k_entry = None, None
+wall_k_entry = None
 scriptDir = os.path.dirname(os.path.abspath(__file__))
 
 
@@ -88,7 +88,6 @@ def ConicalValues():
 
     #Checkbox untick
     checkbox_parabola_var.set(0)
-    upload_var.set(0)
 
 
 ''' ********************* BELL NOZZLE ********************* '''
@@ -101,28 +100,6 @@ def BellValues():
     alpha_entry.config(state='disabled')
 
     #Checkbox untick
-    checkbox_conical_var.set(0)
-    upload_var.set(0)
-
-
-
-''' ********************* UPLOAD NOZZLE ********************* '''
-def UploadPoints():
-    global nozzleType, points_filepath
-    nozzleType = 2
-
-    #Close the nozzle angle/length entries
-    alpha_entry.config(state='disabled')
-    NozzleLength_entry.config(state='disabled')
-
-    #Ask the user to upload the points file path
-    points_filepath = filedialog.askopenfilename(
-        title="Select a File",
-        filetypes=(("Text files", "*.txt"), ("All files", "*.*"))
-    )
-
-    #Checkbox untick
-    checkbox_parabola_var.set(0)
     checkbox_conical_var.set(0)
 
 
@@ -245,7 +222,7 @@ def func_create_seg(seg_number = None):
 
 def mainFunction():
     # Global Variables declaration
-    global nozzleType, injPsi_var, wall_k_entry, calculate_var, stepped_channel_var, smooth_channel_var, points_filepath
+    global nozzleType, injPsi_var, wall_k_entry, calculate_var, stepped_channel_var, smooth_channel_var
     global x_points, y_points, step_data, segment_data, mainOutput_args
 
 
@@ -309,7 +286,7 @@ def mainFunction():
     geometry_entries_list = [NozzleLength_entry, alpha_entry, RtValues_var, mfrValues_var]
 
     geometry_generator_args = [CR, Pc, MR, charLength, eps, Ox, Fuel, it_number, x_initial, x_final, OxTemp, FuelTemp, Rt, eng_mass_flux,
-                               geometry_entries_list, nozzleType, points_filepath]
+                               geometry_entries_list, nozzleType]
     
 
 
@@ -439,21 +416,16 @@ mass_flow_units = ['kg/s', 'lb/s', 'oz/s']
 #Checkboxes variables
 checkbox_conical_var = tk.IntVar()
 checkbox_parabola_var = tk.IntVar()
-upload_var = tk.IntVar()
 RtValues_var = tk.IntVar()
 mfrValues_var = tk.IntVar()
 
-#Nozzle options: 1-Conical 2-Bell 3-Upload points
+#Nozzle options: 1-Conical 2-Bell
 checkbox_conical = ttk.Checkbutton(tab1, text='Conical Nozzle', variable=checkbox_conical_var, command = ConicalValues)
 checkbox_conical.grid(column=3, row=6, padx=5, pady=5, sticky='W')
 
 
 checkbox_parabola = ttk.Checkbutton(tab1, text='Bell Nozzle', variable=checkbox_parabola_var, command = BellValues)
 checkbox_parabola.grid(column=3, row=7, padx=5, pady=5, sticky='W')
-
-
-checkbox_upload = ttk.Checkbutton(tab1, text='Upload points file', variable=upload_var, command = UploadPoints)
-checkbox_upload.grid(column=3, row=8, padx=5, pady=5, sticky='W')
                  
 
 

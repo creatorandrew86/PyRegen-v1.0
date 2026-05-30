@@ -37,13 +37,13 @@ def geometry_generator(geometry_generator_args):
     args = geometry_generator_args
     
     #Unpack arguments list || Order: General - CEA Inputs - Tkinter inputs
-    #List order: CR, Pc, MR, L*, eps, Ox, Fuel, it_num, x_init, x_final, OxTemp, Fuel_Temp, entries_list, nozzleType, points_filepath
+    #List order: CR, Pc, MR, L*, eps, Ox, Fuel, it_num, x_init, x_final, OxTemp, Fuel_Temp, entries_list, nozzleType
     CR, Pc, MR, charLength, eps, it_number, x_initial, x_final = args[0], args[1], args[2], args[3], args[4], args[7] \
                                                                     ,args[8], args[9]
     
     Ox, Fuel, OxTemp, FuelTemp, Rt, eng_mass_flux = args[5], args[6], args[10], args[11], args[12], args[13]
 
-    geometry_entries_list, nozzleType, points_filepath = args[14], args[15], args[16]
+    geometry_entries_list, nozzleType = args[14], args[15]
 
     #Unpack entries list
     NozzleLength_entry, alpha_entry, RtValues_var, mfrValues_var = geometry_entries_list
@@ -103,20 +103,6 @@ def geometry_generator(geometry_generator_args):
         #Get lists for (x, y, eps) at each iteration point
         x_points, y_points, eps_list = ModuleNozzleGeometry.NozzleGeometry(Rt, CR, eps, charLength, it_number, nozzleType, nu_exit, alpha, NozzleLength)
     
-
-    if nozzleType == 2:
-
-        # Open the file using the filepath
-        with open(points_filepath, "r") as file:
-            for line in file:
-
-                # Split each line into values (assuming they are space-separated)
-                values = line.split()
-                
-                # Append the values to their respective lists
-                x_points.append(float(values[0]))  
-                y_points.append(float(values[1]))  
-                eps_list.append(float(values[2])) 
 
     #Combine the geometry lists into another list
     geometry_list = [x_points, y_points, eps_list, Rt]
