@@ -40,6 +40,22 @@ def process_inputs(entries_list):
      FuelTemp_unit, OxTemp_unit, chamber_pressure_unit, throat_radius_unit, mass_flux_unit,
      char_length_unit, coolant_pressure_unit, coolant_temp_unit, coolant_mfr_unit,
      coolant_entry_point_unit, coolant_exit_point_unit) = entries_list
+
+    FuelTemp = None
+    OxTemp = None
+    Pc = None
+    MR = None
+    CR = None
+    eps = None
+    it_number = None
+    charLength = None
+    Rt = None
+    eng_mass_flux = None
+    coolant_P = None
+    coolant_T = None
+    mfr = None
+    x_initial = None
+    x_final = None
     
     # Propellants' temperature conversion plus input verification (the value is optional)
 
@@ -56,6 +72,7 @@ def process_inputs(entries_list):
             FuelTemp = float(FuelTemp_entry.get()) * 5/9
         else:
             print("Choose one of the unit options")
+            input_error = True
 
     else:
         FuelTemp = None
@@ -69,10 +86,11 @@ def process_inputs(entries_list):
             OxTemp = float(OxTemp_entry.get()) + 273.16
         elif OxTemp_unit == 'F':
             OxTemp = (float(OxTemp_entry.get()) - 32)/1.8 + 273.16
-        elif FuelTemp_unit == 'R':
+        elif OxTemp_unit == 'R':
             OxTemp = float(OxTemp_entry.get()) * 5/9
         else:
             print("Choose one of the unit options")
+            input_error = True
 
     else:
         OxTemp = None
@@ -99,10 +117,10 @@ def process_inputs(entries_list):
         print("Fill the Expansion Ratio Entry - Tab 1")
         input_error = True
 
-    if number_it.get().strip() and float(number_it.get()) <= 500:
+    if number_it.get().strip() and 20 <= float(number_it.get()) <= 500:
         it_number = float(number_it.get())
     else:
-        print("Fill the Number of Iterations Entry with a Number less than 500 - Tab 2")
+        print("Fill the Number of Iterations Entry with a Number between 20 and 500 - Tab 2")
         input_error= True
 
 
@@ -219,6 +237,7 @@ def process_inputs(entries_list):
             coolant_T = float(coolant_temp.get()) * 5/9
         else:
             print("Choose one of the unit options")
+            input_error = True
     else:
         print("Fill the Coolant Inlet Temperature Entry - Tab 2")
         input_error = True

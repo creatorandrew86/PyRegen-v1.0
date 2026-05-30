@@ -242,7 +242,7 @@ def print_file(calculate_var, mainOutput_args):
             file.write(f" Coolant : {coolant}\n")
             file.write(f" Coolant Mass Flow Rate = {mfr} kg/s\n")
             file.write(f" Coolant Inlet Temperature = {round(float(data_array[0, 0]), 1)} K\n")
-            file.write(f" Coolant Inlet Temperature = {data_array[0, 2]} bar\n")
+            file.write(f" Coolant Inlet Pressure = {round(float(data_array[0, 2]), 2)} bar\n")
 
             #CEA Short Output
             file.write("\n")
@@ -262,7 +262,7 @@ def print_file(calculate_var, mainOutput_args):
             file.write(f" Max Hot Wall Temperature = {round(maxTwg, 2)} K\n")
             file.write(f" Coolant Outlet Temperature = {round(float(data_array[-1, 0]), 2)} K\n")
             file.write(f" Coolant Outlet Pressure = {round(data_array[-1, 2], 2)} bar\n")
-            file.write(f" Maximum Wall Heat Flux = {round(maxQflux/1000, 2)} kW\n")
+            file.write(f" Maximum Wall Heat Flux = {round(maxQflux/1000, 2)} kW/m^2\n")
             file.write(f" Maximum Gas Side Heat Transfer Coefficient = {round(maxhg/1000, 2)} kW/m^2K\n")
             file.write("\n")
             file.write(f" Temperature Rise in The Channels = {round(float(data_array[-1, 0]) - float(data_array[0,  0]), 2)} K\n")
