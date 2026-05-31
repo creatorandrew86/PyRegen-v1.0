@@ -42,7 +42,7 @@ def _show_step_error(message):
     messagebox.showerror('Step Geometry Error', message)
 
 
-def _validate_step_entries(step_widgets, step_number, previous_step_loc=None):
+def _validate_step_entries(step_widgets, step_number):
     raw_values = [entry.get().strip() for entry in step_widgets]
 
     if any(value == '' for value in raw_values):
@@ -71,10 +71,6 @@ def _validate_step_entries(step_widgets, step_number, previous_step_loc=None):
 
     if step_loc < 0:
         _show_step_error(f'Step {step_number}: end location must be >= 0.')
-        return None
-
-    if previous_step_loc is not None and step_loc <= previous_step_loc:
-        _show_step_error(f'Step {step_number}: end must increase.')
         return None
 
     return values
@@ -141,12 +137,10 @@ def create_step(root, tab3, step_number, segmented_button):
     
     #Another step function 'Add':
     def another_step():
-        previous_step_loc = None
         for index, step_widgets in enumerate(current_steps, start=1):
-            validated_values = _validate_step_entries(step_widgets, index, previous_step_loc)
+            validated_values = _validate_step_entries(step_widgets, index)
             if validated_values is None:
                 return
-            previous_step_loc = validated_values[2]
 
         #Create button for the current step
         step_button = ttk.Button(tab3, text=f'Step {step_number + 1}', command = lambda: step_window.deiconify())
@@ -181,12 +175,10 @@ def create_step(root, tab3, step_number, segmented_button):
             for entry in current_steps[i]:
                 entry.config(state='disabled')
                 
-        previous_step_loc = None
         for index, step_widgets in enumerate(current_steps, start=1):
-            validated_values = _validate_step_entries(step_widgets, index, previous_step_loc)
+            validated_values = _validate_step_entries(step_widgets, index)
             if validated_values is None:
                 return
-            previous_step_loc = validated_values[2]
 
         #Append the entries to the main list, fed to the main function
         for cw_entry, ch_entry, step_loc, Ni, tInput in current_steps:

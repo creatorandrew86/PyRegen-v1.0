@@ -80,51 +80,77 @@ nozzleType, calculate_var = None, False
 ''' ********************* CONICAL NOZZLE ********************* '''
 def ConicalValues():
     global nozzleType
-    nozzleType = 1
 
-    #Open the nozzle angle entry and make sure the nozzle length entry is closed
-    alpha_entry.config(state='normal')
-    NozzleLength_entry.config(state='disabled')
+    if checkbox_conical_var.get() == 1:
+        nozzleType = 1
 
-    #Checkbox untick
-    checkbox_parabola_var.set(0)
+        #Open the nozzle angle entry and make sure the nozzle length entry is closed
+        alpha_entry.config(state='normal')
+        NozzleLength_entry.delete(0, tk.END)
+        NozzleLength_entry.config(state='disabled')
+
+        #Checkbox untick
+        checkbox_parabola_var.set(0)
+
+    else:
+        nozzleType = None
+        alpha_entry.delete(0, tk.END)
+        alpha_entry.config(state='disabled')
 
 
 ''' ********************* BELL NOZZLE ********************* '''
 def BellValues():
     global nozzleType
-    nozzleType = 0
 
-    #Open the nozzle length input
-    NozzleLength_entry.config(state='normal')
-    alpha_entry.config(state='disabled')
+    if checkbox_parabola_var.get() == 1:
+        nozzleType = 0
 
-    #Checkbox untick
-    checkbox_conical_var.set(0)
+        #Open the nozzle length input
+        NozzleLength_entry.config(state='normal')
+        alpha_entry.delete(0, tk.END)
+        alpha_entry.config(state='disabled')
+
+        #Checkbox untick
+        checkbox_conical_var.set(0)
+
+    else:
+        nozzleType = None
+        NozzleLength_entry.delete(0, tk.END)
+        NozzleLength_entry.config(state='disabled')
 
 
 
 ''' ********************* CHOOSE "Rt" OR "MFR" ********************* '''
 def RtValues():
     #If "Throat Radius" selected, enable it (and unit)
-    throat_radius.config(state = 'normal')
-    throat_radius_units_box.config(state = 'normal')
+    if RtValues_var.get() == 1:
+        throat_radius.config(state = 'normal')
+        throat_radius_units_box.config(state = 'normal')
 
-    #Disable the "Mass Flow Rate" input (and unit) and set it to 0
-    mass_flux.config(state = 'disabled')
-    mass_flux_units_box.config(state = 'disabled')
-    mfrValues_var.set(0)
+        #Disable the "Mass Flow Rate" input (and unit)
+        mass_flux.config(state = 'disabled')
+        mass_flux_units_box.config(state = 'disabled')
+        mfrValues_var.set(0)
+
+    else:
+        throat_radius.config(state = 'disabled')
+        throat_radius_units_box.config(state = 'disabled')
 
 
 def mfrValues():
     #If "Mass Flow Rate" is selected, enable it (and unit)
-    mass_flux.config(state = 'normal')
-    mass_flux_units_box.config(state = 'normal')
+    if mfrValues_var.get() == 1:
+        mass_flux.config(state = 'normal')
+        mass_flux_units_box.config(state = 'normal')
 
-    #Disable the "Throat Radius" input (and unit) and set it to 0
-    throat_radius.config(state = 'disabled')
-    throat_radius_units_box.config(state = 'disabled')
-    RtValues_var.set(0)
+        #Disable the "Throat Radius" input (and unit)
+        throat_radius.config(state = 'disabled')
+        throat_radius_units_box.config(state = 'disabled')
+        RtValues_var.set(0)
+
+    else:
+        mass_flux.config(state = 'disabled')
+        mass_flux_units_box.config(state = 'disabled')
 
 
 
@@ -279,6 +305,31 @@ def mainFunction():
     if input_error:
         return
     
+
+    # Nozzle type validation
+    nozzle_error = False
+
+    if nozzleType == None:
+        print("Choose the Nozzle Type - Tab 1")
+        nozzle_error = True
+
+    elif nozzleType == 1:
+        if alpha_entry.get().strip():
+            pass
+        else:
+            print("Fill the Conical Nozzle Angle Entry - Tab 1")
+            nozzle_error = True
+
+    elif nozzleType == 0:
+        if NozzleLength_entry.get().strip():
+            pass
+        else:
+            print("Fill the Bell Nozzle Length Entry - Tab 1")
+            nozzle_error = True
+
+    if nozzle_error:
+        return
+
 
     FuelTemp, OxTemp, Pc, MR, CR, eps, it_number, charLength, Rt, eng_mass_flux, coolant_P, coolant_T, coolant_mfr, x_initial, x_final = inputs_list
 

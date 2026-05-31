@@ -184,7 +184,7 @@ def process_inputs(entries_list):
         eng_mass_flux = None
 
     # Engine Mass Flux Condition
-    else:
+    elif mfrValues_var.get() == 1:
         if mass_flux.get().strip():
             if mass_flux_unit == 'kg/s':
                 eng_mass_flux = float(mass_flux.get())
@@ -200,6 +200,12 @@ def process_inputs(entries_list):
             input_error = True
 
         Rt = None
+
+    else:
+        print("Choose throat radius or nozzle mass flux - Tab 1")
+        input_error = True
+        Rt = None
+        eng_mass_flux = None
 
 
 

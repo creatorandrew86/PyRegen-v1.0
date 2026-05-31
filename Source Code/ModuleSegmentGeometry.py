@@ -72,10 +72,6 @@ def _validate_segment_entries(segment_widgets, segment_number, previous_outlet=N
         _show_segment_error(f'Segment {segment_number}: locations must be >= 0.')
         return None
 
-    if outlet_loc <= inlet_loc:
-        _show_segment_error(f'Segment {segment_number}: outlet must be after inlet.')
-        return None
-
     if previous_outlet is not None and not math.isclose(inlet_loc, previous_outlet, rel_tol=0.0, abs_tol=1e-9):
         _show_segment_error(f'Segment {segment_number}: inlet must match the previous outlet.')
         return None
