@@ -36,7 +36,7 @@ def process_inputs(entries_list):
     #Unpack the entries list || Single or double value lines are entries without units, written like that for readability
     (FuelTemp_entry, OxTemp_entry, chamber_pressure, mixture_ratio, contraction_ratio,
      throat_radius, mass_flux, char_length, eps_entry, coolant_pressure, coolant_temp,
-     coolant_mfr, coolant_entry_point, coolant_exit_point, number_it, RtValues_var,
+     coolant_mfr, coolant_entry_point, coolant_exit_point, number_it, RtValues_var, mfrValues_var,
      FuelTemp_unit, OxTemp_unit, chamber_pressure_unit, throat_radius_unit, mass_flux_unit,
      char_length_unit, coolant_pressure_unit, coolant_temp_unit, coolant_mfr_unit,
      coolant_entry_point_unit, coolant_exit_point_unit) = entries_list

@@ -269,7 +269,7 @@ def mainFunction():
     # Create list of entries || Ttk values containing the values set by the user
     # The list is reinitialized for every iteration of the 
     entries_list = [FuelTemp_entry, OxTemp_entry, chamber_pressure, mixture_ratio, contraction_ratio, throat_radius, mass_flux, char_length, 
-                    eps_entry, coolant_pressure, coolant_temp, coolant_mfr_entry, coolant_entry_point, coolant_exit_point, number_it, RtValues_var]
+                    eps_entry, coolant_pressure, coolant_temp, coolant_mfr_entry, coolant_entry_point, coolant_exit_point, number_it, RtValues_var, mfrValues_var]
 
 
     #Append units to entries list:
