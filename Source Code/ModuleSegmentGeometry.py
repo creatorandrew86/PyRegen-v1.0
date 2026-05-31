@@ -27,13 +27,60 @@
 #  License along with PyRegen. If not, see <http://www.gnu.org/licenses/>.
 
 # -- Imports --
-import tkinter as tk
+import math
 import os
-from tkinter import ttk, messagebox
+import tkinter as tk
+from tkinter import messagebox, ttk
 from ModuleDataStore import segment_data
 
 scriptDir = os.path.dirname(os.path.abspath(__file__))
 current_segment, buttons = [], []
+
+
+def _show_segment_error(message):
+    messagebox.showerror('Segment Geometry Error', message)
+
+
+def _validate_segment_entries(segment_widgets, segment_number, previous_outlet=None):
+    raw_values = [entry.get().strip() for entry in segment_widgets]
+
+    if any(value == '' for value in raw_values):
+        _show_segment_error(f'Segment {segment_number}: fill all fields.')
+        return None
+
+    try:
+        values = [float(value) for value in raw_values]
+    except ValueError:
+        _show_segment_error(f'Segment {segment_number}: use numbers only.')
+        return None
+
+    if any(not math.isfinite(value) for value in values):
+        _show_segment_error(f'Segment {segment_number}: invalid number.')
+        return None
+
+    cw_in, cw_out, ch_in, ch_out, inlet_loc, outlet_loc, channels, thickness = values
+
+    if cw_in <= 0 or cw_out <= 0 or ch_in <= 0 or ch_out <= 0 or thickness <= 0:
+        _show_segment_error(f'Segment {segment_number}: widths, heights, channels, thickness > 0.')
+        return None
+
+    if channels <= 0 or not channels.is_integer():
+        _show_segment_error(f'Segment {segment_number}: channels must be a whole number > 0.')
+        return None
+
+    if inlet_loc < 0 or outlet_loc < 0:
+        _show_segment_error(f'Segment {segment_number}: locations must be >= 0.')
+        return None
+
+    if outlet_loc <= inlet_loc:
+        _show_segment_error(f'Segment {segment_number}: outlet must be after inlet.')
+        return None
+
+    if previous_outlet is not None and not math.isclose(inlet_loc, previous_outlet, rel_tol=0.0, abs_tol=1e-9):
+        _show_segment_error(f'Segment {segment_number}: inlet must match the previous outlet.')
+        return None
+
+    return values
 
 def create_seg(root, tab3, seg_number, stepped_button):
     #Placeholder for finish/reset functions
@@ -121,78 +168,41 @@ def create_seg(root, tab3, seg_number, stepped_button):
 
     #Another step function 'Add':
     def plus_seg():
-        #Check if the entries are filled correctly:
-        #
-        #Real positive numbers, except for the position
+        previous_outlet = None
+        for index, segment_widgets in enumerate(current_segment, start=1):
+            validated_values = _validate_segment_entries(segment_widgets, index, previous_outlet)
+            if validated_values is None:
+                return
+            previous_outlet = validated_values[5]
 
-
-        
-        try:
-            entries = tuple(float(entry.get()) for entry in current_segment[-1])
-        except ValueError:
-            messagebox.showerror('Error', 'Fill all the entries with real numbers')
-            return
-
-        if len(entries) != 8 or any(x < 0 for i, x in enumerate(entries) if i != 4 and i != 5):
-            messagebox.showerror('Error', 'Fill all the entries with valid numbers')
-            return
-
-
-        
-            
         #Create button for the current step
-        seg_button = ttk.Button(tab3, text=f'Segment {seg_number + 1}', command = lambda: seg_window.deiconify())
+        seg_button = ttk.Button(tab3, text=f'Segment {seg_number + 1}', command=lambda: seg_window.deiconify())
         seg_button.grid(row=seg_number + 5, column=0, padx=5, pady=5, sticky='W')
 
         buttons.append(seg_button)
 
 
-        #Hide step 'i' and create step 'i + 1':
+        # Hide the current step(i) window and create the next step (i+1):
         create_seg(root, tab3, seg_number + 1, stepped_button)
 
 
-    # 'Add' button
-    add_button = ttk.Button(seg_window, text='Add', command=plus_seg)
-    add_button.grid(column=0, row=8, padx=5, pady=5, sticky='W')
-
-
-    #Finish button
+    # Finish button
     def finish():
         global seg_list
         global segment_data
 
 
-
-        #Disable entries and buttons from the segment windows
+        # Disable entries and buttons from the segment windows
         for i in range(0, len(current_segment)):
             for entry in current_segment[i]:
                 entry.config(state='disabled')
 
-        
-        #Check if the entries are filled correctly:
-        #
-        #Real positive numbers, except for the position
-
-
-        
-        try:
-            entries = tuple(float(entry.get()) for entry in current_segment[-1])
-        except ValueError:
-            messagebox.showerror('Error 1', 'Fill all the entries with real numbers')
-            return
-
-
-        if len(entries) != 8 or any(x < 0 for i, x in enumerate(entries) if i != 4 and i != 5):
-            messagebox.showerror('Error 1', 'Fill all the entries with valid numbers')
-            return
-
-
-        if seg_number >= 1:
-            if float(current_segment[-2][5].get()) != float(current_segment[-1][4].get()):
-                messagebox.showerror('Error', 'The last channel segment outlet must be equal to the current segment inlet')
+        previous_outlet = None
+        for index, segment_widgets in enumerate(current_segment, start=1):
+            validated_values = _validate_segment_entries(segment_widgets, index, previous_outlet)
+            if validated_values is None:
                 return
-        
-
+            previous_outlet = validated_values[5]
 
         # Retrieve the values and append to segment_data
         for i in range(0, len(current_segment)):
@@ -200,7 +210,7 @@ def create_seg(root, tab3, seg_number, stepped_button):
             segment_data.append(segment_values)
 
 
-        
+        # Disable the finish button
         finish_button.config(state='disabled')
 
 

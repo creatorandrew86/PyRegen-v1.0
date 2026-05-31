@@ -27,14 +27,57 @@
 #  License along with PyRegen. If not, see <http://www.gnu.org/licenses/>.
 
 # -- Imports --
-import tkinter as tk
+import math
 import os
-from tkinter import ttk, messagebox
+import tkinter as tk
+from tkinter import messagebox, ttk
 from ModuleDataStore import step_data
 
 scriptDir = os.path.dirname(os.path.abspath(__file__))
 global step_windows
 current_steps, buttons, step_windows = [], [], []
+
+
+def _show_step_error(message):
+    messagebox.showerror('Step Geometry Error', message)
+
+
+def _validate_step_entries(step_widgets, step_number, previous_step_loc=None):
+    raw_values = [entry.get().strip() for entry in step_widgets]
+
+    if any(value == '' for value in raw_values):
+        _show_step_error(f'Step {step_number}: fill all fields.')
+        return None
+
+    try:
+        values = [float(value) for value in raw_values]
+    except ValueError:
+        _show_step_error(f'Step {step_number}: use numbers only.')
+        return None
+
+    if any(not math.isfinite(value) for value in values):
+        _show_step_error(f'Step {step_number}: invalid number.')
+        return None
+
+    cw, ch, step_loc, channels, thickness = values
+
+    if cw <= 0 or ch <= 0 or thickness <= 0:
+        _show_step_error(f'Step {step_number}: width, height, thickness > 0.')
+        return None
+
+    if channels <= 0 or not channels.is_integer():
+        _show_step_error(f'Step {step_number}: channels must be a whole number > 0.')
+        return None
+
+    if step_loc < 0:
+        _show_step_error(f'Step {step_number}: end location must be >= 0.')
+        return None
+
+    if previous_step_loc is not None and step_loc <= previous_step_loc:
+        _show_step_error(f'Step {step_number}: end must increase.')
+        return None
+
+    return values
 
 def create_step(root, tab3, step_number, segmented_button):
     #Placeholder for finish/reset functions
@@ -98,24 +141,13 @@ def create_step(root, tab3, step_number, segmented_button):
     
     #Another step function 'Add':
     def another_step():
-        #Check if the entries are filled correctly:
-        #
-        #Real positive numbers, except for the position
+        previous_step_loc = None
+        for index, step_widgets in enumerate(current_steps, start=1):
+            validated_values = _validate_step_entries(step_widgets, index, previous_step_loc)
+            if validated_values is None:
+                return
+            previous_step_loc = validated_values[2]
 
-
-        
-        try:
-            entries = tuple(float(entry.get()) for entry in current_steps[-1])
-        except ValueError:
-            messagebox.showerror('Error 1', 'Fill all the entries with real numbers')
-            return
-
-        if len(entries) != 5 or any(x < 0 for i, x in enumerate(entries) if i != 2):
-            messagebox.showerror('Error 1', 'Fill all the entries with valid numbers')
-            return
-
-        
-    
         #Create button for the current step
         step_button = ttk.Button(tab3, text=f'Step {step_number + 1}', command = lambda: step_window.deiconify())
         step_button.grid(row=step_number + 5, column=0, padx=5, pady=5, sticky='W')
@@ -149,22 +181,12 @@ def create_step(root, tab3, step_number, segmented_button):
             for entry in current_steps[i]:
                 entry.config(state='disabled')
                 
-        #Check if the entries are filled correctly:
-        #
-        #Real positive numbers, except for the position
-
-
-        
-        try:
-            entries = tuple(float(entry.get()) for entry in current_steps[-1])
-        except ValueError:
-            messagebox.showerror('Error 1', 'Fill all the entries with real numbers')
-            return
-
-        if len(entries) != 5 or any(x < 0 for i, x in enumerate(entries) if i != 2):
-            messagebox.showerror('Error 1', 'Fill all the entries with valid numbers')
-            return
-        
+        previous_step_loc = None
+        for index, step_widgets in enumerate(current_steps, start=1):
+            validated_values = _validate_step_entries(step_widgets, index, previous_step_loc)
+            if validated_values is None:
+                return
+            previous_step_loc = validated_values[2]
 
         #Append the entries to the main list, fed to the main function
         for cw_entry, ch_entry, step_loc, Ni, tInput in current_steps:

@@ -20,7 +20,7 @@
 #  Author : Andrew Toma
 #  Version 1.0 "PyRegen"
 #
-#  Note: The following "PyRegen" mentionas refer to the v1.0, the free version
+#  Note: The following "PyRegen" mentions refer to the v1.0, the free version
 #
 #  PyRegen Project Website: [https://github.com/creatorandrew86/PyRegen-v1.0]
 #
